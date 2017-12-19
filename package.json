@@ -1,0 +1,26 @@
+{
+  "name": "cyfintoemail",
+  "version": "1.0.0",
+  "description": "Sends an email using AWS to introduce applicants stored in PipeDrive",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "zip": "zip -r app.zip src node_modules",
+    "start": "node -e 'require(\"./src/index.js\").handler(null, null, ()=>{})'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarryEMartland/CYFIntoEmail.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HarryEMartland/CYFIntoEmail/issues"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.171.0",
+    "handlebars": "^4.0.11",
+    "node-fetch": "^1.7.3"
+  },
+  "homepage": "https://github.com/HarryEMartland/CYFIntoEmail#readme"
+}
