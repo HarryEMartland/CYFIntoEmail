@@ -37,7 +37,7 @@ exports.handler = function (event, context, callback) {
 function findNewApplicants() {
     return fetch(pipedriveBaseUrl+'/deals?&user_id='+manchesterUserId+'&stage_id='+generalApplicationStage+'&status=open&api_token=' + pipedriveKey)
         .then(body=>body.json())
-        .then(response=>response.data);
+        .then(response=>response.data || []);
 }
 
 function processDeal(deal) {
