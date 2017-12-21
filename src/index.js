@@ -64,7 +64,8 @@ function moveDeal(deal) {
 }
 
 function sendEmail(deal) {
-    deal.firstName = deal.person_id.name.split(' ')[0];
+    let name = deal.person_id.name;
+    deal.firstName = name.split(' ')[0];
     return ses.sendEmail({
         Destination: {
             BccAddresses: [deal.cc_email],
@@ -86,7 +87,7 @@ function sendEmail(deal) {
             },
             Subject: {
                 Charset: "UTF-8",
-                Data: "Code Your Future Application"
+                Data: "CYF - Welcome " + name + "!"
             }
         },
         Source: deal.user_id.email,
