@@ -7,6 +7,7 @@ const pipedriveKey = process.env.PIPEDRIVE_KEY;
 const pipedriveBaseUrl = 'https://api.pipedrive.com/v1/';
 const generalApplicationStage = '1';
 const emailSentStage = "20";
+const dealLimit = 50;//to stop the request limit running out when updating
 
 const emailHtmlTemplate = Handlebars.compile(fs.readFileSync('src/email.html', 'utf8'));
 const emailTextTemplate = Handlebars.compile(fs.readFileSync('src/email.txt', 'utf8'));
@@ -34,7 +35,7 @@ exports.handler = function (event, context, callback) {
 };
 
 function findNewApplicants() {
-    return fetch(pipedriveBaseUrl+'/deals?&user_id='+process.env.PIPEDRIVE_USER_ID+'&stage_id='+generalApplicationStage+'&status=open&api_token=' + pipedriveKey)
+    return fetch(pipedriveBaseUrl+'/deals?&limit='+dealLimit+'&user_id='+process.env.PIPEDRIVE_USER_ID+'&stage_id='+generalApplicationStage+'&status=open&api_token=' + pipedriveKey)
         .then(body=>body.json())
         .then(response=>response.data || []);
 }
