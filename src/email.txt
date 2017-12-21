@@ -1,33 +1,27 @@
-Dear {{firstName}},
-
-Many thanks for your interest in joining our free 6-month programming course for asylum seekers and refugees.
+Dear, {{firstName}},
+Many thanks for your interest in joining our free 6-month full-stack web programming course for asylum seekers and refugees.
 
 What will you get if you are accepted to the program?
-- A FREE 6-months professional full-stack web development course
-- Training to become a junior web developer
-- Mentored by professional coders in the local tech industry
-- Live classes on the weekends (1-full day) and flexible 20h online assignments during the week
-- Support to get your first work internship/job in the industry
-- Study together with international students from all over the world
+    - A FREE 6-months professional full-stack web development course
+    - Training to become a junior web developer
+    - Mentorship by professional coders in the local tech industry
+    - Live classes on the weekends (1-full day) and flexible 25h online assignments during the week
+    - Support to get your first work internship/job in the industry
+    - An opportunity to study together with international students from all over the world
 
-We need you to send us two things:
-Your CV / resume (if you have one)
-A 300 words letter of interest that answers these questions:
+We need you to send us the following:
+1. A 300-word letter of interest that answers these questions:
+    o Why would you like to become a programmer?
+    o What do you think you could do with these new skills?
+    o What do you see yourself doing in 5 years’ time with this skill?
 
-    - Why would you like to become a programmer?
-    - What do you think you could do with these new skills?
-    - What do you see yourself doing in 5 years time with this skill?
+It’s important that you do some research in Google and understand what this career is all about.
+The earlier you send it, the quicker you can start working on the next steps!
+Once you send us the letter, we will provide you with online tutorials on HTML and CSS to get you
+started. We will also give you a call over the phone to check on your progress. Make sure that you
+check your emails regularly for any updates on your progress.
 
-It’s important that you do some research in google and understand what this career is all about.
-
-The earlier you send it, the quicker you can start working in the next steps!
-
-This is the first of three parts application process. Make sure that you check your emails regularly.
-
-If you have any questions, you can join our online chat:
-https://gitter.im/CodeYourFuture-all/Applicants
-
-Spread the word by liking our facebook @codeyourfuture.io and following us on Twitter (@CodeYourFuture_)  and share them with your contacts!
+If you like what we do, please like our Facebook page @codeyourfuture.io ,follow us on Twitter (@CodeYourFuture_) and spread the word!
 
 Regards,
 CYF Team
