@@ -5,7 +5,6 @@ const Handlebars = require('handlebars');
 
 const pipedriveKey = process.env.PIPEDRIVE_KEY;
 const pipedriveBaseUrl = 'https://api.pipedrive.com/v1/';
-const manchesterUserId = '2643534';
 const generalApplicationStage = '1';
 const emailSentStage = "20";
 
@@ -35,7 +34,7 @@ exports.handler = function (event, context, callback) {
 };
 
 function findNewApplicants() {
-    return fetch(pipedriveBaseUrl+'/deals?&user_id='+manchesterUserId+'&stage_id='+generalApplicationStage+'&status=open&api_token=' + pipedriveKey)
+    return fetch(pipedriveBaseUrl+'/deals?&user_id='+process.env.PIPEDRIVE_USER_ID+'&stage_id='+generalApplicationStage+'&status=open&api_token=' + pipedriveKey)
         .then(body=>body.json())
         .then(response=>response.data || []);
 }
