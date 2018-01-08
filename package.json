@@ -4,7 +4,7 @@
   "description": "Sends an email using AWS to introduce applicants stored in PipeDrive",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "zip": "zip -r app.zip src node_modules",
     "start": "node -e 'require(\"./src/index.js\").handler(null, null, ()=>{})'"
   },
@@ -22,5 +22,8 @@
     "handlebars": "^4.0.11",
     "node-fetch": "^1.7.3"
   },
-  "homepage": "https://github.com/HarryEMartland/CYFIntoEmail#readme"
+  "homepage": "https://github.com/HarryEMartland/CYFIntoEmail#readme",
+  "devDependencies": {
+    "mocha": "^4.1.0"
+  }
 }
