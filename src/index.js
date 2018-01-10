@@ -8,9 +8,15 @@ const pipedriveBaseUrl = 'https://api.pipedrive.com/v1/';
 const generalApplicationStage = '1';
 const emailSentStage = "20";
 const dealLimit = 50;//to stop the request limit running out when updating
+const aMonth = 2629746;
 
 const emailHtmlTemplate = Handlebars.compile(fs.readFileSync('src/email.html', 'utf8'));
 const emailTextTemplate = Handlebars.compile(fs.readFileSync('src/email.txt', 'utf8'));
+
+const shouldInviteToSlack = process.env.INVITE_TO_SLACK || false;
+const slackExpiry = process.env.SLACK_EXPIRY || aMonth;
+const slackChannel = process.env.SLACK_CHANNEL || "C8MJQFY2C";
+const slackAPIKey = process.env.SLACK_API_KEY;
 
 AWS.config.region = 'eu-west-1';
 AWS.config.update({
@@ -45,10 +51,31 @@ function processDeal(deal) {
     return sendEmail(deal)
         .then(()=>deal)
         .then(moveDeal)
+        .then(inviteToSlack)
         .then(function (data) {
             console.log("email sent to deal " + deal.id);
             return data;
         });
+}
+
+function inviteToSlack(deal) {
+    if(shouldInviteToSlack){
+
+        let formData = new FormData();
+        formData.append('channels', slackChannel);
+        formData.append('email', deal.person_id.email[0].value);
+        formData.append('ultra_restricted', 'true');
+        formData.append('expiration_ts', (Date.now()/1000)+slackExpiry);
+
+        return fetch("https://slack.com/api/users.admin.invite",{
+            method:'POST',
+            headers:{
+                "Authorisation":"Bearer "+slackAPIKey,
+                "Content-Type":"application/x-www-form-urlencoded"
+            },
+            body: formData
+        })
+    }
 }
 
 function moveDeal(deal) {
