@@ -2,12 +2,6 @@ const assert = require('assert');
 const Handlebars = require('handlebars');
 const fs = require('fs');
 const w3c = require('w3c-validate').createValidator();
-const htmllint = require('htmllint');
-
-const htmlLintConf={
-    "tag-bans":[]
-};
-
 
 describe('Email Templates', function () {
 
