@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/HarryEMartland/CYFIntoEmail#readme",
   "devDependencies": {
-    "mocha": "^4.1.0"
+    "mocha": "^4.1.0",
+    "w3c-validate": "0.0.2"
   }
 }
