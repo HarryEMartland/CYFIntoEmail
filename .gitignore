@@ -6,6 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 env_setup.sh
 app.zip
+src/email.html
+src/email.txt
 
 # Runtime data
 pids

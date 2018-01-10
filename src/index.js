@@ -2,6 +2,8 @@ const AWS = require('aws-sdk');
 const fetch = require('node-fetch');
 const fs = require('fs');
 const Handlebars = require('handlebars');
+const markdown = require('markdown').markdown;
+const removeMarkdown = require('remove-markdown');
 
 const pipedriveKey = process.env.PIPEDRIVE_KEY;
 const pipedriveBaseUrl = 'https://api.pipedrive.com/v1/';
@@ -10,13 +12,14 @@ const emailSentStage = "20";
 const dealLimit = 50;//to stop the request limit running out when updating
 const aMonth = 2629746;
 
-const emailHtmlTemplate = Handlebars.compile(fs.readFileSync('src/email.html', 'utf8'));
-const emailTextTemplate = Handlebars.compile(fs.readFileSync('src/email.txt', 'utf8'));
+const markdownTemplate = Handlebars.compile(fs.readFileSync('src/email.md', 'utf8'));
 
 const shouldInviteToSlack = process.env.INVITE_TO_SLACK || false;
 const slackExpiry = process.env.SLACK_EXPIRY || aMonth;
 const slackChannel = process.env.SLACK_CHANNEL || "C8MJQFY2C";
 const slackAPIKey = process.env.SLACK_API_KEY;
+
+const removeMarkdownConf = {stripListLeaders:false};
 
 AWS.config.region = 'eu-west-1';
 AWS.config.update({
@@ -91,7 +94,8 @@ function moveDeal(deal) {
 }
 
 function sendEmail(deal) {
-    let name = deal.person_id.name;
+    const name = deal.person_id.name;
+    const emailMarkdown = markdownTemplate(deal);
     deal.firstName = name.split(' ')[0];
     return ses.sendEmail({
         Destination: {
@@ -105,11 +109,11 @@ function sendEmail(deal) {
             Body: {
                 Html: {
                     Charset: "UTF-8",
-                    Data: emailHtmlTemplate(deal)
+                    Data: markdown.toHTML(emailMarkdown)
                 },
                 Text: {
                     Charset: "UTF-8",
-                    Data: emailTextTemplate(deal)
+                    Data: removeMarkdown(emailMarkdown, removeMarkdownConf)
                 }
             },
             Subject: {
