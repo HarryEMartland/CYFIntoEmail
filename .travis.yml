@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+  - "node"
+cache:
+  directories:
+    - "node_modules"
+before_deploy:
+  - npm prune --production
+deploy:
+  provider: lambda
+  function_name: "CYFIntroEmail"
+  region: "eu-west-1"
+  role: "arn:aws:iam::818032293643:role/service-role/CYFEmailChaseLambda"
+  runtime: "nodejs6.10"
+  module_name: "src/index"
+  handler_name: "handler"
+  access_key_id: "$AWS_ACCESS_KEY"
+  secret_access_key: "$AWS_SECRET_KEY"
+  on:
+    branch: master
