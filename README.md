@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/HarryEMartland/CYFIntoEmail.svg?branch=master)](https://travis-ci.org/HarryEMartland/CYFIntoEmail)
+
 # CYFIntoEmail
 Sends an email using AWS to introduce applicants stored in PipeDrive
 
