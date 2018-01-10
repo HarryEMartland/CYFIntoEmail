@@ -18,4 +18,6 @@ npm start
 ```
 node src/testMarkdown.js
 ```
-This will create two files `src/email.html` and `src/email.txt` you can open the html file in a browser to check how things look
+This will create two files `src/email.html` and `src/email.txt` you can open the html file in a browser to check how things look.
+
+For information on how to write markdown see the [markdown cheat sheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links).
