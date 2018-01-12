@@ -2,6 +2,7 @@ const AWS = require('aws-sdk');
 const fetch = require('node-fetch');
 const fs = require('fs');
 const Handlebars = require('handlebars');
+const formurlencoded = require('form-urlencoded');
 
 const pipedriveKey = process.env.PIPEDRIVE_KEY;
 const pipedriveBaseUrl = 'https://api.pipedrive.com/v1/';
@@ -41,45 +42,48 @@ exports.handler = function (event, context, callback) {
 };
 
 function findNewApplicants() {
-    return fetch(pipedriveBaseUrl+'/deals?&limit='+dealLimit+'&user_id='+process.env.PIPEDRIVE_USER_ID+'&stage_id='+generalApplicationStage+'&status=open&api_token=' + pipedriveKey)
-        .then(body=>body.json())
-        .then(response=>response.data || []);
+    return fetch(pipedriveBaseUrl + '/deals?&limit=' + dealLimit + '&user_id=' + process.env.PIPEDRIVE_USER_ID + '&stage_id=' + generalApplicationStage + '&status=open&api_token=' + pipedriveKey)
+        .then(body => body.json())
+        .then(response => response.data || []);
 }
 
 function processDeal(deal) {
-
+    console.log("starting processing " + deal.id);
     return sendEmail(deal)
-        .then(()=>deal)
+        .then(() => deal)
         .then(moveDeal)
         .then(inviteToSlack)
         .then(function (data) {
-            console.log("email sent to deal " + deal.id);
+            console.log("finished processing  " + deal.id);
             return data;
         });
 }
 
 function inviteToSlack(deal) {
-    if(shouldInviteToSlack){
+    if (shouldInviteToSlack) {
 
-        let formData = new FormData();
-        formData.append('channels', slackChannel);
-        formData.append('email', deal.person_id.email[0].value);
-        formData.append('ultra_restricted', 'true');
-        formData.append('expiration_ts', (Date.now()/1000)+slackExpiry);
+        let formData = formurlencoded({
+            'channels': slackChannel,
+            'email': deal.person_id.email[0].value,
+            'ultra_restricted': 'true',
+            'expiration_ts': (Date.now() / 1000) + slackExpiry,
+            'first_name': deal.firstName
+        });
 
-        return fetch("https://slack.com/api/users.admin.invite",{
-            method:'POST',
-            headers:{
-                "Authorisation":"Bearer "+slackAPIKey,
-                "Content-Type":"application/x-www-form-urlencoded"
+        return fetch("https://slack.com/api/users.admin.invite", {
+            method: 'POST',
+            headers: {
+                "Authorization": "Bearer " + slackAPIKey,
+                "Content-Type": "application/x-www-form-urlencoded"
             },
             body: formData
         })
     }
+    return deal;
 }
 
 function moveDeal(deal) {
-    return fetch(pipedriveBaseUrl+'/deals/'+deal.id+'?api_token=' + pipedriveKey, {
+    return fetch(pipedriveBaseUrl + '/deals/' + deal.id + '?api_token=' + pipedriveKey, {
         method: 'PUT',
         headers: {
             "Content-Type": "application/json"
@@ -87,7 +91,7 @@ function moveDeal(deal) {
         body: JSON.stringify({
             "stage_id": emailSentStage
         })
-    });
+    }).then(() => deal);
 }
 
 function sendEmail(deal) {

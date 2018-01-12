@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.171.0",
+    "form-urlencoded": "^2.0.4",
     "handlebars": "^4.0.11",
     "node-fetch": "^1.7.3"
   },
