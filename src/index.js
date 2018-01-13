@@ -95,8 +95,8 @@ function moveDeal(deal) {
 
 function sendEmail(deal) {
     const name = deal.person_id.name;
-    const emailMarkdown = markdownTemplate(deal);
     deal.firstName = name.split(' ')[0];
+    const emailMarkdown = markdownTemplate(deal);
     return ses.sendEmail({
         Destination: {
             BccAddresses: [deal.cc_email],
