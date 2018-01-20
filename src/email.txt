@@ -1,4 +1,4 @@
-Dear, {{firstName}},
+Dear {{firstName}},
 Many thanks for your interest in joining our free 6-month full-stack web programming course for asylum seekers and refugees.
 
 What will you get if you are accepted to the program?
